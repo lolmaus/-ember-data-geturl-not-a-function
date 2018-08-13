@@ -19,7 +19,7 @@ module('save foo', function(hooks) {
           {
             id: 1,
             name: 'Foo 1',
-            bar: null,
+            bar: 1,
             baz: 1
           }
         ],
@@ -47,13 +47,11 @@ module('save foo', function(hooks) {
     console.log('baz', baz.serialize());
   });
 
-  test('stuff', function(assert) {
-    foo.get('bar').then(_bar => {
-      assert.deepEqual(_bar, bar);
-    });
+  test('stuff', async function(assert) {
+    const _bar = await foo.get('bar')
+    assert.equal(_bar, bar, "foo.bar should contain bar");
 
-    foo.get('baz').then(_baz => {
-      assert.deepEqual(_baz, baz);
-    });
+    const _baz = await foo.get('baz')
+    assert.equal(_baz, baz, "foo.baz should contain baz");
   });
 });
